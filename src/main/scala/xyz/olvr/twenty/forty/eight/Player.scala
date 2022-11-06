@@ -1,7 +1,8 @@
 package xyz.olvr.twenty.forty.eight
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.safari.SafariDriver
-import org.openqa.selenium.interactions.Keyboard
+import org.openqa.selenium.interactions.Actions
 
 import scala.math.log10
 
@@ -11,11 +12,11 @@ object Player {
   import Strategy._
   import ExpectiMax._
 
-  def sendMove(m: String, k: Keyboard) = m match {
-    case "u" => k.sendKeys("w")
-    case "d" => k.sendKeys("s")
-    case "l" => k.sendKeys("a")
-    case "r" => k.sendKeys("d")
+  def sendMove(m: String, k: Actions) = m match {
+    case "u" => k.sendKeys("w").perform()
+    case "d" => k.sendKeys("s").perform()
+    case "l" => k.sendKeys("a").perform()
+    case "r" => k.sendKeys("d").perform()
   }
 
   def pause = Thread.sleep(80)
@@ -33,16 +34,16 @@ object Player {
     base10Board.map(_.map { case 0 => 0 case v => (log10(v) / log10(2)).toInt })
   }
 
-  def start(tree: GameTree, depth: Int, driver: SafariDriver, keyboard: Keyboard) = {
+  def start(tree: GameTree, depth: Int, driver: SafariDriver, keyboard: Actions) = {
 
     // xpath to a "you win, would you like to keep playing?" box
     val keepPlaying = "keep-playing-button"
 
     def play(t: GameTree, cheats: CheatCodes = Map[String, String](), turn: Boolean = true, continue: Boolean = true): GameTree = t match {
-      case b: Branch if continue && b.win && driver.findElementsByClassName(keepPlaying).size != 0 => {
+      case b: Branch if continue && b.win && driver.findElements(By.className(keepPlaying)).size != 0 => {
         println("click me!")
         Thread.sleep(5000)
-        driver.findElementsByClassName(keepPlaying).get(0).click()
+        driver.findElements(By.className(keepPlaying)).get(0).click()
         pause
         play(b, cheats, false, false) // set continue to false, so it doesn't try to click again
       }
@@ -75,7 +76,7 @@ object Play {
   def game(depth: Int) {
     val url = "http://www.2048game.com"
     val driver = new SafariDriver()
-    val keyboard = driver.getKeyboard()
+    val keyboard = new Actions(driver)
 
     driver.get(url)
     driver.manage.window.maximize
