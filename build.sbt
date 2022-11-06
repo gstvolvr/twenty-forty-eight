@@ -4,7 +4,7 @@ lazy val root = (project in file(".")).
       scalaVersion := "2.12.1"
     )),
     libraryDependencies ++= Seq(
-      "org.seleniumhq.selenium" % "selenium-java" % "3.9.1",
+      "org.seleniumhq.selenium" % "selenium-java" % "4.6.0",
       "org.scalatest" %% "scalatest" % "3.0.3" % "test"
     ),
     name := "twenty-forty-eight"
