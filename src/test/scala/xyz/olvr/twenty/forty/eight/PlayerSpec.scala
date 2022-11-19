@@ -6,7 +6,7 @@ class PlayerSpec extends FunSpec {
 
   describe("player") {
     it("should play") {
-      val depth = 3
+      val depth = 2
       Play.game(depth)
     }
   }

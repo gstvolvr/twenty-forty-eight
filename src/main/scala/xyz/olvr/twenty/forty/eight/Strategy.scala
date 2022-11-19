@@ -22,7 +22,7 @@ object Strategy {
 
   /** weight sum of features */
   def eval(t: GameTree): Double = {
-    val weights = Seq(0.75, 0.25) // can be "learned"
+    val weights = Seq(0.78, 0.22) // can be "learned"
     weights.zip(Seq(snake(t), open(t))).foldLeft(0.0)((agg, tup) => agg + tup._1 * tup._2)
   }
 }
