@@ -18,3 +18,6 @@ Currently, you can only run this using sbt on a mac.
 
 On Safari, make sure to have the following setting configured:
 > Develop > Allow Remote Automation
+
+# Note
+I haven't updated this in a long time, and its still running on Java 17. 
